@@ -169,6 +169,8 @@ export function Globe({
         "relative inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]",
         className,
       )}
+      role="img"
+      aria-label="Interactive 3D globe showing global property locations with markers indicating various cities worldwide"
     >
       <canvas
         className={cn(
@@ -182,6 +184,8 @@ export function Globe({
         onPointerOut={() => updatePointerInteraction(null)}
         onMouseMove={() => {}}
         onTouchMove={() => {}}
+        aria-hidden="true"
+        tabIndex={-1}
       />
     </div>
   );

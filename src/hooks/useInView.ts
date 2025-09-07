@@ -18,16 +18,10 @@ export default function useInView(options: UseInViewOptions = { threshold: 0.1 }
     }
 
     if (node) {
-      console.log('Setting up observer for element:', node);
       observerRef.current = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
           if (entry) {
-            console.log('Intersection observed:', {
-              isIntersecting: entry.isIntersecting,
-              intersectionRatio: entry.intersectionRatio,
-              threshold
-            });
             setInView(entry.isIntersecting);
           }
         },

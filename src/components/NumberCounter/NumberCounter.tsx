@@ -85,9 +85,15 @@ const NumberCounter: React.FC<NumberCounterProps> = ({
     : new Intl.NumberFormat(undefined, { maximumFractionDigits: decimals, minimumFractionDigits: 0 }).format(current);
 
   return (
-    <span ref={ref as React.RefCallback<HTMLSpanElement>} className={className} aria-live="polite" aria-atomic="true">
+    <span 
+      ref={ref as React.RefCallback<HTMLSpanElement>} 
+      className={className} 
+      aria-live="polite" 
+      aria-atomic="true"
+      aria-label={`${prefix || ''}${formatter ? formatter(value) : value}${suffix || ''}`}
+    >
       {prefix}
-      <span className="number-counter" aria-hidden="false">
+      <span className="number-counter" aria-hidden="true">
         {display}
       </span>
       {suffix}

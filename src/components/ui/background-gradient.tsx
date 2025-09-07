@@ -6,11 +6,13 @@ export const BackgroundGradient = ({
   className,
   containerClassName,
   animate = true,
+  ariaLabel,
 }: {
   children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
   animate?: boolean;
+  ariaLabel?: string;
 }) => {
   const variants = {
     initial: {
@@ -21,7 +23,10 @@ export const BackgroundGradient = ({
     },
   };
   return (
-    <div className={cn("relative p-[2px] group", containerClassName)}>
+    <div 
+      className={cn("relative p-[2px] group", containerClassName)}
+      {...(ariaLabel && { 'aria-label': ariaLabel })}
+    >
       <motion.div
         variants={animate ? variants : undefined}
         initial={animate ? "initial" : undefined}
@@ -42,6 +47,7 @@ export const BackgroundGradient = ({
           "absolute inset-0 rounded-3xl z-[1] opacity-60 group-hover:opacity-100 blur-xl  transition duration-500 will-change-transform",
           " bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
         )}
+        aria-hidden="true"
       />
       <motion.div
         variants={animate ? variants : undefined}
@@ -63,6 +69,7 @@ export const BackgroundGradient = ({
           "absolute inset-0 rounded-3xl z-[1] will-change-transform",
           "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
         )}
+        aria-hidden="true"
       />
 
       <div className={cn("relative z-10", className)}>{children}</div>

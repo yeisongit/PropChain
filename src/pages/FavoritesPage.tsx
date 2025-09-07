@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart } from 'lucide-react';
 import { PropertyCard } from '@/components/PropertyCard/PropertyCard';
 import { mockProperties } from '@/data/mockData';
+import AnimateOnView from '@/components/AnimateOnView';
 
 interface FavoritesPageProps {
   favorites: string[];
@@ -25,49 +26,57 @@ export const FavoritesPage: React.FC<FavoritesPageProps> = ({
       <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-pink-200/20 to-transparent rounded-full blur-3xl animate-pulse delay-1000"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8 relative z-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center">
-            <Heart className="w-8 h-8 text-red-500 mr-3 fill-current" />
-            Favorite Properties
-          </h1>
-          <p className="text-xl text-gray-600">
-            Your saved properties are here for easy access.
-          </p>
-        </div>
+        <AnimateOnView className="animate-fade-up" delay={100} threshold={0.15}>
+          <div className="mb-8 relative z-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center">
+              <Heart className="w-8 h-8 text-red-500 mr-3 fill-current" />
+              Favorite Properties
+            </h1>
+            <p className="text-xl text-gray-600">
+              Your saved properties are here for easy access.
+            </p>
+          </div>
+        </AnimateOnView>
 
         {favoriteProperties.length > 0 ? (
           <>
-            <div className="mb-6 relative z-10">
-              <span className="text-gray-600">
-                <span className="font-semibold text-gray-900">{favoriteProperties.length}</span> saved properties
-              </span>
-            </div>
+            <AnimateOnView className="animate-fade-up" delay={200} threshold={0.15}>
+              <div className="mb-6 relative z-10">
+                <span className="text-gray-600">
+                  <span className="font-semibold text-gray-900">{favoriteProperties.length}</span> saved properties
+                </span>
+              </div>
+            </AnimateOnView>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-              {favoriteProperties.map((property) => (
-                <PropertyCard
-                  key={property.id}
-                  property={{...property, favorited: true}}
-                  onToggleFavorite={onToggleFavorite}
-                  onClick={onPropertyClick}
-                />
-              ))}
-            </div>
+            <AnimateOnView className="animate-scale" delay={300} threshold={0.2}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                {favoriteProperties.map((property) => (
+                  <PropertyCard
+                    key={property.id}
+                    property={{...property, favorited: true}}
+                    onToggleFavorite={onToggleFavorite}
+                    onClick={onPropertyClick}
+                  />
+                ))}
+              </div>
+            </AnimateOnView>
           </>
         ) : (
-          <div className="text-center py-16 relative z-10">
-            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Heart className="w-12 h-12 text-gray-400" />
+          <AnimateOnView className="animate-fade-up" delay={200} threshold={0.15}>
+            <div className="text-center py-16 relative z-10">
+              <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Heart className="w-12 h-12 text-gray-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No favorites yet</h3>
+              <p className="text-gray-600 mb-6">Start browsing properties and save your favorites here.</p>
+              <a
+                href="/listings"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors inline-block"
+              >
+                Browse Properties
+              </a>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No favorites yet</h3>
-            <p className="text-gray-600 mb-6">Start browsing properties and save your favorites here.</p>
-            <a
-              href="/listings"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors inline-block"
-            >
-              Browse Properties
-            </a>
-          </div>
+          </AnimateOnView>
         )}
       </div>
     </div>

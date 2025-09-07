@@ -34,6 +34,7 @@ export function LineShadowText({
         className,
       )}
       data-text={content}
+      aria-label={`Text with line shadow effect: ${content}`}
       {...props}
     >
       {content}

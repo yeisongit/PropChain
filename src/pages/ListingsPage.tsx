@@ -4,6 +4,8 @@ import { SearchFilters } from '@/components/SearchFilters/SearchFilters';
 import { mockProperties } from '@/data/mockData';
 import { PropertyFilters } from '@/types';
 import { Search } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import AnimateOnView from '@/components/AnimateOnView';
 
 interface ListingsPageProps {
   onToggleFavorite: (id: string) => void;
@@ -78,57 +80,67 @@ export const ListingsPage: React.FC<ListingsPageProps> = ({
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="mb-8 relative">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Property Listings
-          </h1>
-          <p className="text-xl text-gray-600">
-            Discover your perfect property from our extensive collection.
-          </p>
-        </div>
+        <AnimateOnView className="animate-fade-up" delay={100} threshold={0.15}>
+          <div className="mb-8 relative">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Property Listings
+            </h1>
+            <p className="text-xl text-gray-600">
+              Discover your perfect property from our extensive collection.
+            </p>
+          </div>
+        </AnimateOnView>
 
         {/* Search and Filters */}
-        <div className="mb-8 relative z-10">
-          <SearchFilters
-            filters={filters}
-            onFiltersChange={setFilters}
-            showFilters={showFilters}
-            onToggleFilters={() => setShowFilters(!showFilters)}
-          />
-        </div>
+        <AnimateOnView className="animate-fade-up" delay={200} threshold={0.15}>
+          <div className="mb-8 relative z-10">
+            <SearchFilters
+              filters={filters}
+              onFiltersChange={setFilters}
+              showFilters={showFilters}
+              onToggleFilters={() => setShowFilters(!showFilters)}
+            />
+          </div>
+        </AnimateOnView>
 
         {/* Results Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 relative z-10">
-          <div className="text-gray-600">
-            <span className="font-semibold text-gray-900">{filteredProperties.length}</span> properties found
+        <AnimateOnView className="animate-fade-up" delay={300} threshold={0.15}>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 relative z-10">
+            <div className="text-gray-600">
+              <span className="font-semibold text-gray-900">{filteredProperties.length}</span> properties found
+            </div>
+            
+            <div className="flex items-center space-x-4 min-w-0 flex-shrink-0">
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap">Sort by:</label>
+              <Select
+                value={sortBy}
+                onValueChange={(value) => setSortBy(value)}
+              >
+                <SelectTrigger className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[180px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="price-desc">Price: High to Low</SelectItem>
+                  <SelectItem value="price-asc">Price: Low to High</SelectItem>
+                  <SelectItem value="sqft-desc">Size: Largest First</SelectItem>
+                  <SelectItem value="year-desc">Year Built: Newest First</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          
-          <div className="flex items-center space-x-4">
-            <label className="text-sm font-medium text-gray-700">Sort by:</label>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="price-desc">Price: High to Low</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="sqft-desc">Size: Largest First</option>
-              <option value="year-desc">Year Built: Newest First</option>
-            </select>
-          </div>
-        </div>
+        </AnimateOnView>
 
         {/* Property Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-          {filteredProperties.map((property) => (
-            <PropertyCard
-              key={property.id}
-              property={property}
-              onToggleFavorite={onToggleFavorite}
-              onClick={onPropertyClick}
-            />
-          ))}
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+            {filteredProperties.map((property) => (
+              <PropertyCard
+                key={property.id}
+                property={property}
+                onToggleFavorite={onToggleFavorite}
+                onClick={onPropertyClick}
+              />
+            ))}
+          </div>
 
         {/* Empty State */}
         {filteredProperties.length === 0 && (

@@ -77,9 +77,12 @@ export function TypingAnimation({
         "text-4xl font-bold leading-[5rem] tracking-[-0.02em]",
         className,
       )}
+      aria-live="polite"
+      aria-label={`Typing animation: ${children}`}
       {...props}
     >
-      {displayedText}
+      <span aria-hidden="true">{displayedText}</span>
+      <span className="sr-only">{children}</span>
     </MotionComponent>
   );
 }
